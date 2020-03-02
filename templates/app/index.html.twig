@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title "Hello"%}
+
+{% block body %}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        <link rel="stylesheet" href="https://bootswatch.com/4/pulse/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    {% endblock %}
+
+<div id="app"></div>
+
+  {% block javascripts %}
+    {{encore_entry_script_tags('app')}}
+        {% endblock %}  
+{% endblock %}

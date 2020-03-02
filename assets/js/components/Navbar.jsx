@@ -1,0 +1,64 @@
+import React, { useState, useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import AuthContext from '../contexts/AuthContext';
+import loginAPI from '../services/loginAPI';
+import UserContext from '../contexts/UserContext';
+
+const Navbar = ({ history }) => {
+
+    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const { user } = useContext(UserContext);
+    const handleLogout = () => {
+    loginAPI.logout();
+    setIsAuthenticated(false);
+    history.push("/");
+    }
+   
+    return (
+ <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+  <NavLink className="navbar-brand" to="/">ChatSym</NavLink>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
+  </button>
+  <div className="collapse navbar-collapse" id="navbarColor03">
+    <ul className="navbar-nav mr-auto">
+      <li className="nav-item">
+        <NavLink className="nav-link" to="/">Home<span className="sr-only"></span></NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to="/channels">Channels</NavLink>
+        </li>
+      <li className="nav-item">
+        <a className="nav-link" href="#">Features</a>
+      </li>
+      </ul>
+      <ul className="navbar-nav ml-auto">
+      {(!isAuthenticated && (
+        <>
+        <li className="nav-item">
+        <NavLink to="/register" className="btn btn-danger mr-2">Nouveau ? <i className="fas fa-user-plus"></i>
+        </NavLink>
+        </li>
+      <li className="nav-item mr-2">
+        <NavLink to="/login" className="btn btn-primary">Se Connecter<i className="fas fa-key ml-2"></i></NavLink>
+        </li>
+        </>
+      )) || (
+        <>
+        <li className="nav-item mr-2 mt-2">
+            <span className="user_firstname">Hi <strong>{user.firstname}</strong> !</span>
+         </li>
+          <li className="nav-item">
+            <button onClick={handleLogout} className="btn btn-danger">
+              Déconnexion !
+            </button>
+          </li>
+        </>
+      )}
+      </ul>
+  </div>
+ </nav>
+ );
+}
+ 
+export default Navbar;
