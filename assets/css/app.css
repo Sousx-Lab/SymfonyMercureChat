@@ -1,11 +1,10 @@
 html, body { 
     margin:0; 
     height: 100%;
-    background-color: #0C0C0E;
-    position: relative;
-
 }
-
+.app{
+    height: 100%;
+}
 .username{
     color: rgb(137, 98, 173);
     padding-left: 5px;
@@ -17,22 +16,14 @@ html, body {
     background-color: rgb(99, 60, 136);
     padding: 8px 8px;
 }
-.menu{
-    width: 14%;
-    height: 100%;
-}
 
 .channels-list{
     background-color: rgb(38,38,39);
     font-weight: bolder;
-    width: 15%;
-    height: 100%;
-    position: absolute;
 }
 
 .count-users {
-    float: right;
-    margin-right: 5%;
+    float:right;
     padding: 0px 2px;
     color: white;
     background-color: rgb(82, 54, 109);
@@ -44,37 +35,26 @@ li {
     padding-bottom: 10px;
 }
 
-.message {
-    height: 100%;
-    width: 85%;
-    left: 15%;
-    position: absolute;
-}
-
 .show-message {
     background-color: rgb(38,38,39);
-    top: 0%; 
-    left: 0%;
-    height: 70%;
-    width: 80%;
-    position: absolute;
     overflow-x: hidden;
     overflow-y: scroll;
-    border-color: white;
-    border-style: solid;
-}
-.send-message{
-    position: absolute;
-    top: 86%;
-    left: 15%;
-    width: 68%;
-    resize: none;
 }
 
+.textarea {
+    resize: none;
+    width: 90%;
+    height: 50px;
+    padding: 0px;
+}
 .message-content{
     color: #faf5f5;
 
 }
-textarea {
-    resize: none;
-  }
+
+.send{
+    display: inline;
+    margin: 0px;
+    padding: 0;
+    align-content: center;
+}

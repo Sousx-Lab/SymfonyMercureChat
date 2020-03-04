@@ -25,7 +25,7 @@ const App = () => {
     <UserContext.Provider value={{user, setUser}} >
     <HashRouter>
         <NavbarWhithRouter />
-    <main className="main">
+    <main className="container-fluid h-100">
     <Switch>
         <Route path="/register" component={RegisterPage} />
         <Route path="/login" component={LoginPage}/>

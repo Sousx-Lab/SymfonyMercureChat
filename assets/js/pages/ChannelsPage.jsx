@@ -56,8 +56,8 @@ useEffect(() => {
 
 return (
     <>
-    <div className="menu">
-      <div className="channels-list">
+  <div className="row h-100">
+    <div className="col-sm-2 channels-list p-2 mr-1">
       {channels && (
       <ul>
         {channels.map(channel => (
@@ -68,11 +68,15 @@ return (
         ))}
       </ul>
       )}
-        </div>
       </div>
-      <h1 className="mb-4 ml-4 text-center">{!channel.name && "Choisire un channel ou crée un nouveau" || channel.name}</h1>
-      {channel.id &&
-      <MessengerPage id={channel.id} msg={channel.messages ?? []}/>}
+      {!channel.id && (
+      <div className="text-center col-sm-8">
+        <h1 >Choisire un channel ou crée un nouveau</h1>
+      </div>
+      ) || (
+        <MessengerPage id={channel.id} channelName={channel.name} msg={channel.messages ?? []}/>
+      )}
+    </div>
     </>
   );
 }

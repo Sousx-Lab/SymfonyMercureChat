@@ -4,7 +4,7 @@ import { MERCURE_URL, API_URL } from '../services/config';
 import UserContext from '../contexts/UserContext';
 
 
-const MessengerPage = ({ id, msg }) => {
+const MessengerPage = ({ id, channelName, msg }) => {
 
     const { user } = useContext(UserContext);
     const [messages, setMessages] = useState(msg);     
@@ -14,7 +14,7 @@ const MessengerPage = ({ id, msg }) => {
         room:"",
         sender:"api/users/" + user.id
       });
-    console.log(msg)
+
     const newDate = new Date().toISOString();
 
     const handleChange = ({currentTarget}) => {
@@ -35,6 +35,7 @@ const MessengerPage = ({ id, msg }) => {
     //Envois du message a la base de donnée
     const handleSubmit = async event =>{
       event.preventDefault();
+      if(message.content.length === 0 || message.content == ' ') return;
       message.createdAt = newDate;
       message.room = "api/rooms/" + id;
       try {
@@ -65,20 +66,18 @@ const mercureSubscribe = () => {
       if(parsedMessage.room.id === id){
           copyMessages.push(parsedMessage)
           setMessages(copyMessages);
-          resetMessage()
+          resetMessage();
     }
-  }
-
-
-}
-
+  };
+};
 return ( 
      <>
-     <div className="message">
+     <div className="col-sm-8 h-100 p-0">
           <div 
-            className="show-message">
+            className="show-message pt-3 h-75">
               {messages && (
             <div>
+            <h1 className="p-2">{channelName}</h1>
               {messages.map((msg,k) => (
                 <p key={k}>
                   <span 
@@ -95,17 +94,17 @@ return (
                 </div>
                 )}
             </div>
-        </div> 
-    <div className="send-message">
-           <form onSubmit={handleSubmit}>
+    <div className="form-group">
+           <form onSubmit={handleSubmit} >
             <textarea name="content" 
+              className="textarea" 
               value={message.content} 
                 onChange={handleChange} 
-                  className="form-control" 
                     type="text"
               />
-          <button type="submit">Envoyer</button>
-       </form>
+          <button type="submit" className="btn btn-primary ">Envoyer</button>
+            </form>
+          </div>
       </div>
     </>
     );

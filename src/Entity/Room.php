@@ -47,7 +47,7 @@ class Room
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="room")
+     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="room", orphanRemoval=true)
      * @Groups({"rooms_read"})
      * @ApiSubresource
      */
