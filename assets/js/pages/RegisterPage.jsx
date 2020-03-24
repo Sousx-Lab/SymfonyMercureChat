@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Field from '../components/forms/Field';
 import registerAPI from '../services/registerAPI';
 
@@ -13,7 +13,13 @@ const RegisterPage = ({ history }) => {
         password:"",
         confirmPassword:""
     });
-    const [errors, setErrors] = useState("");
+    const [errors, setErrors] = useState({
+      firstname:"",
+      lastname:"",
+      email:"",
+      password:"",
+      confirmPassword:""
+    });
 
     const handleChange = ({currentTarget}) => {
         const { name, value } =  currentTarget;
@@ -34,8 +40,6 @@ const RegisterPage = ({ history }) => {
             });
             setErrors(apiErrors);
           }
-
-         
        }
     }
     return (
@@ -50,7 +54,7 @@ const RegisterPage = ({ history }) => {
                 placeholder="Votre Nom"
                  type="text"
                   onChange={handleChange}
-                   error={errors}
+                   error={errors.firstname}
             />
             <Field
              label="Prénom"
@@ -59,7 +63,7 @@ const RegisterPage = ({ history }) => {
                 placeholder="Votre Prénom"
                  type="text"
                   onChange={handleChange}
-                   error={errors}
+                   error={errors.lastname}
             />
             <Field
              label="Adresse Email"
@@ -68,7 +72,7 @@ const RegisterPage = ({ history }) => {
                 placeholder="Votre Adresse Email"
                  type="email"
                   onChange={handleChange}
-                   error={errors}
+                   error={errors.email}
             />
             <Field
              label="Mot de passe"
@@ -77,7 +81,7 @@ const RegisterPage = ({ history }) => {
                 placeholder="Votre Mot de passe"
                  type="password"
                   onChange={handleChange}
-                   error={errors}
+                   error={errors.password}
             />
             <Field
              label="Confirmez le mot de passe"
@@ -86,7 +90,7 @@ const RegisterPage = ({ history }) => {
                 placeholder="Confirmez Votre Mot de passe"
                  type="password"
                   onChange={handleChange}
-                   error={errors}
+                   error={errors.confirmPassword}
             />
             <button type="submit" className="btn btn-primary">C'est parti!</button>
             </form>

@@ -27,5 +27,13 @@ services:
         tags:
           - { name: kernel.event_listener, event: lexik_jwt_authentication.on_jwt_created, method: updateJwtData }
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    # Events User Avatar remover
+    App\Events\UserAvatarRemover:
+        arguments: ['@doctrine.orm.entity_manager']
+        tags:
+          - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }
+          
+    # Events password ecoder
+    App\Events\PasswordEncoderSubscriber:
+        tags:
+        - { name: doctrine.event_subscriber }

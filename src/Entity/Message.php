@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  },
  *    normalizationContext={"groups"={"messages_read"}},
  *    denormalizationContext={"disable_type_enforcement"=true},
+ *    itemOperations={"get", "delete"},
  *    mercure=true
  * )
  * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")

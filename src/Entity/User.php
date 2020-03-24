@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use App\Entity\Media\UserAvatar;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -48,7 +50,6 @@ class User implements UserInterface
 
     /**
      * @Assert\EqualTo(propertyPath="password", message="Veuillez confirmez le même mot de passe")
-     * @Assert\NotBlank(message="Veuillez confirmer le mot de passe")
      * @var string The confirmation password registration !
      */
     private $confirmPassword;
@@ -71,7 +72,24 @@ class User implements UserInterface
      */
     private $lastname;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
+    /**
+     * @var UserAvatar|null
+     * @ORM\ManyToOne(targetEntity=UserAvatar::class)
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
+     * @ApiProperty(iri="http://schema.org/image")
+     */
+    private $avatar;
+    /**
+     * @var String|null
+     * @Groups({"messages_read", "rooms_read", "messages_subresource", "users_read"})
+     */
+    private $avatarPath;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -198,4 +216,57 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * Get the value of updatedAt
+     */ 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set the value of updatedAt
+     * @return self
+     */
+    public function setUpdatedAt(\DateTimeInterface $updatedAt = null): self
+    {
+         $this->updatedAt = $updatedAt ?? new \DateTime('now');
+         return $this;
+        
+    }
+
+    /**
+     * Get the value of avatar
+     * @return UserAvatar|null
+     */ 
+    public function getAvatar(): ?UserAvatar
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param UserAvatar|null $avatar
+     * @return self
+     */ 
+    public function setAvatar($avatar): ?self
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get undocumented variable
+     *
+     * @return [type]
+     */ 
+    public function getAvatarPath()
+    {
+       if($this->getAvatar() instanceof UserAvatar)
+       {
+         $this->avatarPath = $this->getAvatar()->getFilePath();
+         return $this->avatarPath;
+       }
+       
+    }
 }

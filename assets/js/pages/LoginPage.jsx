@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import loginAPI from '../services/loginAPI';
+import authAPI from '../services/authAPI';
 import AuthContext from '../contexts/AuthContext';
 import Field from '../components/forms/Field';
 
@@ -22,7 +22,7 @@ const LoginPage = ({ history }) => {
     const handleSubmit = async event => {
         event.preventDefault();
         try {
-            await loginAPI.authenticate(credentials)
+            await authAPI.authenticate(credentials)
             setIsAuthenticated(true);
             history.replace("/channels")
         } catch (error) {
@@ -35,12 +35,14 @@ const LoginPage = ({ history }) => {
        <>
        <div className="container">
         <h3 className="text-center mt-3">Connexion </h3>
-        <form onSubmit={handleSubmit}>
+        <div className="row d-flex justify-content-center">
+        <div className="col-md-6">
+        <form className="" onSubmit={handleSubmit}>
            <Field
              label="Adresse Email"
               name="username"
                value={credentials.username}
-                placeholder="Adresse Email"
+                placeholder="email@domain.com"
                  type="text"
                   onChange={handleChange}
                    error={error}
@@ -52,12 +54,14 @@ const LoginPage = ({ history }) => {
                 placeholder="Votre mot de passe"
                  type="password"
                   onChange={handleChange}
-                   error={error}
+                   error={""}
             />
                 <div className="form-group">
                    <button type="submit" className="btn btn-primary">Connexion</button>
                 </div>
             </form>
+            </div>
+            </div>
         </div>
         </>
      );

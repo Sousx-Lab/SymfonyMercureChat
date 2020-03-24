@@ -58,3 +58,14 @@ li {
     padding: 0;
     align-content: center;
 }
+
+.avatar {
+    width: 40px;
+    height: auto;
+}
+
+.avatar-channel{
+    width: 25px;
+    height: auto;
+    margin-left: 5px;
+}

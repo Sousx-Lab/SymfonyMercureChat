@@ -14,6 +14,10 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        refresh:
+            pattern:  ^/api/token/refresh
+            stateless: true
+            anonymous: true
         registration: 
             pattern: ^/api/users
             stateless: true
@@ -46,9 +50,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/api/rooms, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # - { path: ^/api/invoices, roles: IS_AUTHENTICATED_FULLY }
-        # - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE]}
+        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST]}
+        - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST]}
+        - { path: ^/api/rooms, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/messages, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE]}
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }

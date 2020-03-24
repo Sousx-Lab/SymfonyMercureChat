@@ -1,20 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
-import loginAPI from '../services/loginAPI';
+import authAPI from '../services/authAPI';
 import UserContext from '../contexts/UserContext';
+import { Avatar_Path } from '../services/config';
 
 const Navbar = ({ history }) => {
 
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
     const { user } = useContext(UserContext);
     const handleLogout = () => {
-    loginAPI.logout();
+    authAPI.logout();
     setIsAuthenticated(false);
     history.push("/");
     }
-   
-    return (
+  
+return (
  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
   <NavLink className="navbar-brand" to="/">ChatSym</NavLink>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,7 +37,7 @@ const Navbar = ({ history }) => {
       {(!isAuthenticated && (
         <>
         <li className="nav-item">
-        <NavLink to="/register" className="btn btn-danger mr-2">Nouveau ? <i className="fas fa-user-plus"></i>
+        <NavLink to="/register" className="btn btn-danger mr-2">Nouveau +<i className="fas fa-user-plus"></i>
         </NavLink>
         </li>
       <li className="nav-item mr-2">
@@ -45,8 +46,10 @@ const Navbar = ({ history }) => {
         </>
       )) || (
         <>
-        <li className="nav-item mr-2 mt-2">
-            <span className="user_firstname">Hi <strong>{user.firstname}</strong> !</span>
+        <li className="nav-item dropdown mr-3">
+        <NavLink to={"/profil/" + user.firstname}>
+          <img src={!user.avatar && "https://api.adorable.io/avatars/40/abott@adorable.png" || Avatar_Path + user.avatar} className="rounded-circle avatar" alt="avatar" />
+          </NavLink>
          </li>
           <li className="nav-item">
             <button onClick={handleLogout} className="btn btn-danger">

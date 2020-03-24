@@ -2,12 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import messagesAPI from '../services/messagesAPI';
 import { MERCURE_URL, API_URL } from '../services/config';
 import UserContext from '../contexts/UserContext';
+import { Avatar_Path, Adorable_Avatar } from '../services/config';
 
 
 const MessengerPage = ({ id, channelName, msg }) => {
 
     const { user } = useContext(UserContext);
-    const [messages, setMessages] = useState(msg);     
+    const [messages, setMessages] = useState(msg);
+
     const [message, setMessage] = useState({
         content:"",
         createdAt:"",
@@ -16,7 +18,7 @@ const MessengerPage = ({ id, channelName, msg }) => {
       });
 
     const newDate = new Date().toISOString();
-
+    
     const handleChange = ({currentTarget}) => {
       const {name, value } = currentTarget;
       setMessage({...message, [name]: value})
@@ -46,17 +48,16 @@ const MessengerPage = ({ id, channelName, msg }) => {
       }
     }
 
-  //Recharge les messages au changement de l'id du channel
-  //
+  //Recharge les messages au changement de l'id du channel//
   
   useEffect(() => {
     setMessages(msg);
-    mercureSubscribe();
+    mercureSubscriber();
   },[id]);
   
-//Suscription au flux Mercure server au topic "messages/{id}"
+//Abonnement au flux Mercure server au topic "messages/{id}"
 //Parse et traite les messages reçu en temp réel
-const mercureSubscribe = () => {
+const mercureSubscriber = () => {
     const copyMessages = [...msg]
     const url = new URL(MERCURE_URL);
     url.searchParams.append('topic', API_URL + "messages/{id}");
@@ -80,6 +81,10 @@ return (
             <h1 className="p-2">{channelName}</h1>
               {messages.map((msg,k) => (
                 <p key={k}>
+                <img src={!msg.sender.avatarPath && Adorable_Avatar + Math.floor(Math.random() * Math.floor(10)) + ".png" 
+                  ||
+                   Avatar_Path + msg.sender.avatarPath
+                  } className="rounded-circle avatar-channel" alt="avatar" />
                   <span 
                     className="username">
                     {msg.content &&  

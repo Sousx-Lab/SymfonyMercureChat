@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Field = ({ name, label, value, placeholder = "", type = "text", error= "", onChange }) => {
+const Field = ({ name, label, labelClass = null, divClass = null, value, placeholder = "", type = "text", error = "", onChange }) => {
     return (
         <div className="form-group">
-        <label htmlFor={name}>{label}</label>
+        <label className={"font-weight-bold " + labelClass} htmlFor={name}>{label}</label>
+        <div className={divClass}>
         <input 
            name={name}
             value={value}
@@ -14,7 +15,8 @@ const Field = ({ name, label, value, placeholder = "", type = "text", error= "",
                  className={"form-control " + (error && "is-invalid")}
             />
             {error && <p className="invalid-feedback">{error}</p>}
-        </div>
+            </div>
+           </div>
      );
 }
 export default Field;

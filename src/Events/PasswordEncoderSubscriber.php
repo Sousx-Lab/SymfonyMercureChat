@@ -1,38 +1,81 @@
 <?php
+
 namespace App\Events;
 
 use App\Entity\User;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\ViewEvent;
-use ApiPlatform\Core\EventListener\EventPriorities;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-class PasswordEncoderSubscriber implements EventSubscriberInterface {
-
+class PasswordEncoderSubscriber implements EventSubscriber
+{
     private $encoder;
 
-    public function __construct(UserPasswordEncoderInterface $encoder)
+    protected $requestStack;
+
+    public function __construct(UserPasswordEncoderInterface $encoder, RequestStack $requestStack)
     {
         $this->encoder = $encoder;
+        $this->requestStack = $requestStack;
     }
 
-    public static function getSubscribedEvents()
+    public function getSubscribedEvents()
     {
-        return [
-            KernelEvents::VIEW => ['encodePassword', EventPriorities::PRE_WRITE]
+        return[
+            'prePersist',
+            'preUpdate'
         ];
     }
+    
+    public function prePersist(LifecycleEventArgs $args)
+    {   
+        $user = $args->getEntity();
 
-    public function encodePassword(ViewEvent $event)
-    {
-        $user = $event->getControllerResult();
-        $method = $event->getRequest()->getMethod();
-
-        if($user instanceof User && $method === "POST")
+        if(!$user instanceof User)
         {
-            $hash = $this->encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
+            return;
         }
+        $hash = $this->encoder->encodePassword($user, $user->getPassword());
+        $user->setUpdatedAt(new \DateTime('now'));
+        $user->setPassword($hash);
+
+    }
+
+    public function preUpdate(PreUpdateEventArgs $args)
+    {
+        $user = $args->getEntity();
+        $oldPassword = $this->getOldPassword();
+        $newPassword = $this->getNewPassword();
+
+        if(!$user instanceof User)
+        {
+            return;
+        }
+
+        if($newPassword !== $oldPassword)
+        {
+            $hash = $this->encoder->encodePassword($user, $newPassword);
+            $user->setPassword($hash);
+            $user->setUpdatedAt(new \DateTime('now'));
+        }
+       
+    }
+
+    public function getNewPassword(): ?string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $data = $request->get('data');
+        $newPassword = $data->getPassword();
+        return $newPassword;
+    }
+
+    public function getOldPassword(): ?string
+    {
+        $request = $this->requestStack->getCurrentRequest();
+        $previousData = $request->get('previous_data');
+        $oldPassword = $previousData->getPassword();
+        return $oldPassword;
     }
 }

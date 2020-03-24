@@ -1,12 +1,21 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { LOGIN_API} from './config';
+import { LOGIN_API } from './config';
 import User from './user';
 
 
 function logout(){
     window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("refreshToken")
     delete axios.defaults.headers["Authorization"];
+}
+
+/**
+ * Define header Authorization axios
+ * @param {string} token 
+ */
+function setAxiosToken(token){
+    axios.defaults.headers["Authorization"] = "Bearer " + token; 
 }
 
 /**
@@ -16,20 +25,14 @@ function logout(){
 function authenticate(credentials){
     return axios
            .post(LOGIN_API, credentials)
-           .then(response => response.data.token)
-           .then(token => {
-               window.localStorage.setItem("authToken", token);
-               setAxiosToken(token);
-               User.set(jwtDecode(token));
-           })
-}
-
-/**
- * Define header Authorization axios
- * @param {string} token 
- */
-function setAxiosToken(token){
-    axios.defaults.headers["Authorization"] = "Bearer " + token; 
+           .then(response => {
+            const token = response.data.token
+            const refresh_token = response.data.refresh_token
+              window.localStorage.setItem("authToken", token);
+              window.localStorage.setItem("refreshToken", refresh_token);
+                setAxiosToken(token);
+                  User.set(jwtDecode(token));
+        })   
 }
 
 /**
@@ -47,15 +50,22 @@ function setUp(){
     }
 }
 
+/**
+ * Check id user Authenticated
+ */
 function isAuthenticated(){
     if(setUp()){
         return true;
     }
     return false;
 }
+
+
+
 export default {
     authenticate,
     setUp,
     isAuthenticated,
-    logout
+    logout,
+    setAxiosToken
 }
