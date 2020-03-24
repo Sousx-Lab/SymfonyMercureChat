@@ -2,10 +2,6 @@
 
 ChatSym is a simple real-time text chat based on Symfony / Api Platform / Mercure Server and ReactJS…
 
-### Description
-
-ChatSym is a simple real-time text chat based on Symfony / Api Platform / Mercure Server and ReactJS…
-
 # Installation:
 
 #### `composer install`
