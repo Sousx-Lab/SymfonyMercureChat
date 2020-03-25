@@ -132,7 +132,7 @@ const UserPage = ({ history }) => {
                divClass="col-lg-8"
                 name="firstname"
                  value={credentials.firstname}
-                  placeholder="Change your firstname"
+                  placeholder="Change your firstname "
                    type="text"
                     onChange={handleChange}
                      error={errors.firstname}

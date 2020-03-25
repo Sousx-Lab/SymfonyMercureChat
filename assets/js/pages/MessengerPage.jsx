@@ -88,9 +88,9 @@ return (
                   <span 
                     className="username">
                     {msg.content &&  
-                      msg.sender.firstname + ": "}
+                      msg.sender.firstname + " " + new Date(msg.createdAt).toLocaleTimeString() + " :"}
                     </span>
-                      <span 
+                      <span
                       className="message-content">
                         { msg.content}
                           </span>

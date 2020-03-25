@@ -49,6 +49,7 @@ li {
 }
 .message-content{
     color: #faf5f5;
+    padding: 10px 0px 10px 10px;
 
 }
 
@@ -65,7 +66,7 @@ li {
 }
 
 .avatar-channel{
-    width: 25px;
+    width: 20px;
     height: auto;
     margin-left: 5px;
 }
