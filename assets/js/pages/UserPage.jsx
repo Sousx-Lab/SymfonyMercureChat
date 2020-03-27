@@ -117,7 +117,7 @@ const UserPage = ({ history }) => {
             <h1>Edit Profile</h1>
             <hr />
             <div className="row">
-              <AvatarUploader userAvatar={credentials.avatar} />
+              <AvatarUploader user={user} />
               <div className="col-md-9">
                 <h3>Personal info</h3>
           {alerts.state && (

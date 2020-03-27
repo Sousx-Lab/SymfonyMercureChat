@@ -14,7 +14,6 @@ export const AVATAR_API =  API_URL + "user_avatars"
 /**
  * Media Path
  */
-
- 
 export const Avatar_Path = "../../../images/avatars/"
-export const Adorable_Avatar = "https://api.adorable.io/avatars/40/"
+
+export const UI_Avatar = "https://eu.ui-avatars.com/api/?rounded=true&background=565252&color=fff&bold=true&name="

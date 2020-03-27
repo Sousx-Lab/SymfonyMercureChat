@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import AuthContext from '../contexts/AuthContext';
 import authAPI from '../services/authAPI';
 import UserContext from '../contexts/UserContext';
-import { Avatar_Path } from '../services/config';
+import { Avatar_Path, UI_Avatar } from '../services/config';
 
 const Navbar = ({ history }) => {
 
@@ -48,7 +48,7 @@ return (
         <>
         <li className="nav-item dropdown mr-3">
         <NavLink to={"/profil/" + user.firstname}>
-          <img src={!user.avatar && "https://api.adorable.io/avatars/40/abott@adorable.png" || Avatar_Path + user.avatar} className="rounded-circle avatar" alt="avatar" />
+          <img src={!user.avatar && UI_Avatar + "+" + user.firstname + "+" + user.lastname || Avatar_Path + user.avatar} className="rounded-circle avatar" alt="avatar" />
           </NavLink>
          </li>
           <li className="nav-item">

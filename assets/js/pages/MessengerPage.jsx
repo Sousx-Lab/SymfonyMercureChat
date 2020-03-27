@@ -2,22 +2,20 @@ import React, { useState, useEffect, useContext } from 'react';
 import messagesAPI from '../services/messagesAPI';
 import { MERCURE_URL, API_URL } from '../services/config';
 import UserContext from '../contexts/UserContext';
-import { Avatar_Path, Adorable_Avatar } from '../services/config';
+import { Avatar_Path, UI_Avatar } from '../services/config';
 
 
 const MessengerPage = ({ id, channelName, msg }) => {
 
     const { user } = useContext(UserContext);
     const [messages, setMessages] = useState(msg);
-
+    
     const [message, setMessage] = useState({
         content:"",
-        createdAt:"",
+        createdAt: new Date().toISOString(),
         room:"",
         sender:"api/users/" + user.id
       });
-
-    const newDate = new Date().toISOString();
     
     const handleChange = ({currentTarget}) => {
       const {name, value } = currentTarget;
@@ -28,7 +26,7 @@ const MessengerPage = ({ id, channelName, msg }) => {
     const resetMessage = () => {
       setMessage({
         content:"",
-        createdAt:"",
+        createdAt: new Date().toISOString(),
         room:"",
         sender:"api/users/" + user.id
       });
@@ -38,7 +36,6 @@ const MessengerPage = ({ id, channelName, msg }) => {
     const handleSubmit = async event =>{
       event.preventDefault();
       if(message.content.length === 0 || message.content == ' ') return;
-      message.createdAt = newDate;
       message.room = "api/rooms/" + id;
       try {
         await messagesAPI.send(message)
@@ -56,7 +53,7 @@ const MessengerPage = ({ id, channelName, msg }) => {
   },[id]);
   
 //Abonnement au flux Mercure server au topic "messages/{id}"
-//Parse et traite les messages reçu en temp réel
+//Parse et traite les messages reçu en temps réel
 const mercureSubscriber = () => {
     const copyMessages = [...msg]
     const url = new URL(MERCURE_URL);
@@ -81,10 +78,9 @@ return (
             <h1 className="p-2">{channelName}</h1>
               {messages.map((msg,k) => (
                 <p key={k}>
-                <img src={!msg.sender.avatarPath && Adorable_Avatar + Math.floor(Math.random() * Math.floor(10)) + ".png" 
-                  ||
-                   Avatar_Path + msg.sender.avatarPath
-                  } className="rounded-circle avatar-channel" alt="avatar" />
+                <img src={!msg.sender.avatarPath && UI_Avatar + msg.sender.firstname + "+" + msg.sender.lastname 
+                || 
+                Avatar_Path + msg.sender.avatarPath}className="rounded-circle avatar-channel" alt="avatar" />
                   <span 
                     className="username">
                     {msg.content &&  

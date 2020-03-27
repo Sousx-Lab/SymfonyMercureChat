@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import Resizer from 'react-image-file-resizer';
-import { Avatar_Path } from '../services/config';
+import { Avatar_Path, UI_Avatar } from '../services/config';
 import avatarAPI from '../services/avatarAPI';
 
 
     
-const AvatarUploader = ({ userAvatar }) => {
+const AvatarUploader = ({ user }) => {
 
-    const [avatar, setAvatar] = useState(userAvatar ? Avatar_Path + userAvatar : null);
+    const [avatar, setAvatar] = useState(user.avatar ? Avatar_Path + user.avatar : null);
     /*
      * Gère l'upload et le redimonssionnement de l'image 
      * Utilisation de Resizer, sortie d'image binaire (Blob)
@@ -41,7 +41,7 @@ const AvatarUploader = ({ userAvatar }) => {
     return (
      <div className="col-md-3">
         <div className="text-center">
-          <img src={!avatar && "https://api.adorable.io/avatars/40/abott@adorable.png" || avatar} className="rounded-circle" alt="avatar" />
+          <img src={!avatar && UI_Avatar + "+" + user.firstname + "+" + user.lastname || avatar } className="rounded-circle" alt="avatar" />
            <h6>Upload a different photo...</h6>
    <input 
      type="file"
