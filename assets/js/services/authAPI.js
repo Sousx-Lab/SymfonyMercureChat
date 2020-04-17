@@ -1,10 +1,11 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { LOGIN_API } from './config';
+import { LOGIN_API, DEL_USER_LIST_API } from './config';
 import User from './user';
 
 
-function logout(){
+function logout(id, username){
+    navigator.sendBeacon(DEL_USER_LIST_API, JSON.stringify({userid: id, username: username}));
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("refreshToken")
     delete axios.defaults.headers["Authorization"];

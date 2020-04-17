@@ -105,7 +105,7 @@ const UserPage = ({ history }) => {
         });
         setErrors(apiErrors);
         setAlert({
-          state: true, type: "danger",message: "Please try to correct the errors"});
+          state: true, type: "danger", message: "Please try to correct the errors"});
       }
     }
   }

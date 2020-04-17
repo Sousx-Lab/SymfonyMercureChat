@@ -14,6 +14,7 @@ import UserContext from './contexts/UserContext';
 import RegisterPage from './pages/RegisterPage';
 import UserPage from './pages/UserPage';
 
+
 //import { ToastContainer } from 'react-toastift';
 
 
@@ -23,7 +24,7 @@ const App = () => {
     const [user, setUser] = useState(logedUser.get());
     const NavbarWhithRouter = withRouter(Navbar);
     return(
-    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated}} >
+    <AuthContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
     <UserContext.Provider value={{user, setUser}} >
     <HashRouter>
         <NavbarWhithRouter />

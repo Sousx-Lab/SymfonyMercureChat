@@ -10,7 +10,7 @@ const Navbar = ({ history }) => {
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
     const { user } = useContext(UserContext);
     const handleLogout = () => {
-    authAPI.logout();
+    authAPI.logout(user.id, user.firstname);
     setIsAuthenticated(false);
     history.push("/");
     }

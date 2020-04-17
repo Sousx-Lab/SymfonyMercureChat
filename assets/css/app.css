@@ -70,3 +70,17 @@ li {
     height: auto;
     margin-left: 5px;
 }
+
+.users-list {
+    background-color: rgb(38,38,39);
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.users-list ul {
+    padding: 5px;
+}
+.users-list li {
+    list-style: none;
+
+}
