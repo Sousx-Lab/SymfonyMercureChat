@@ -69,8 +69,9 @@ class UsersChannelController extends AbstractController {
             $publisher(new Update($this->topic, $validatedData));
             $response = new Response();
             $response->setStatusCode(Response::HTTP_OK, "user deleted");
+        }else{
+            throw new BadRequestHttpException('Bad Request');
         }
-
-        throw new BadRequestHttpException('Bad Request');
+         return new Response('', Response::HTTP_OK);
     }
 }

@@ -90,15 +90,14 @@ class HandleUsersListsFiles{
         $currentList = json_decode(file_get_contents($this->file), true);
 
         foreach($currentList as $key => $value)
+        {
+            if($value['userid'] === $data['userid'])
             {
-                if($value['userid'] === $data['userid'])
-                {
-                    unset($currentList["$key"]);
-                    $jsonData = json_encode(array_values($currentList));
-                    file_put_contents($this->file, $jsonData);
-                    return $jsonData;
-                }
+                unset($currentList["$key"]);
             }
-
+        }
+        $jsonData = json_encode(array_values($currentList));
+        file_put_contents($this->file, $jsonData);
+        return $jsonData;
     }
 }
