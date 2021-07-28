@@ -18,8 +18,8 @@ useEffect(() =>{
   navigator.sendBeacon(DEL_USER_LIST_API, JSON.stringify({userid: user.id, username: user.firstname}));
     return (
       <div className="container">
-    <div className="jumbotron mt-3">
-        <h1 className="display-3">Hello !</h1>
+    <div className="jumbotron mt-4">
+        <h1 className="display-3">Welcome !</h1>
           <p className="lead">ChatSym est un simple chat textuel en temp réel basé sur <strong>Symfony, Api Platform, Mercure Server et ReactJS...</strong></p>
         <hr className="my-4" />
     <p className="lead">
