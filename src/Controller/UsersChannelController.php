@@ -7,7 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Services\UsersListsFiles\HandleUsersListsFiles;
+use App\Services\UsersListsFiles\HandleUsersList;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Mercure\PublisherInterface;
 use Symfony\Component\Mercure\Update;
@@ -15,13 +15,13 @@ use Symfony\Component\Mercure\Update;
 class UsersChannelController extends AbstractController {
 
     /**
-     * @var HandleUsersListsFiles
+     * @var HandleUsersList
      */
     private $usersList;
 
     private $topic = 'users_list';
 
-    public function __construct(HandleUsersListsFiles $usersList)
+    public function __construct(HandleUsersList $usersList)
     {
         $this->usersList = $usersList;
     }

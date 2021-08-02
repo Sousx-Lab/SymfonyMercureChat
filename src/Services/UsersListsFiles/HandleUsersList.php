@@ -3,32 +3,22 @@
 namespace App\Services\UsersListsFiles;
 
 
-class HandleUsersListsFiles{
+class HandleUsersList{
 
     /**
      * usersListFile name
-     * @var string
      */
-    private $fileName;
+    const FILE_NAME = "usersList.json";
 
     /**
      * Directory usersListFile
-     * @var string
      */
-    private $dirFile;
-    
+    const FILE_DIR = __DIR__ . DIRECTORY_SEPARATOR . "Data" . DIRECTORY_SEPARATOR;
+
     /**
      * UsersListFile
-     * @var string
      */
-    private $file;
-
-    public function __construct()
-    {
-        $this->fileName = "usersList.json";
-        $this->dirFile = __DIR__ . DIRECTORY_SEPARATOR . "UsersListsFiles" . DIRECTORY_SEPARATOR;
-        $this->file = $this->dirFile . $this->fileName;
-    }
+    const FILE = self::FILE_DIR . self::FILE_NAME;
 
     /**
      * Add user to usersListFile
@@ -36,7 +26,11 @@ class HandleUsersListsFiles{
      */
     public function addUserToFile(array $data): string
     {
-        $currentList = json_decode(file_get_contents($this->file), true);
+        if(!file_exists(self::FILE)){
+            file_put_contents(self::FILE, '');
+        };
+
+        $currentList = json_decode(file_get_contents(self::FILE), true);
         if(!empty($currentList))
         {
             foreach($currentList as $key => $value)
@@ -51,17 +45,17 @@ class HandleUsersListsFiles{
                     unset($currentList["$key"]);
                     $currentList[] = $data;
                     $jsonData = json_encode(array_values($currentList));
-                    file_put_contents($this->file, $jsonData);
+                    file_put_contents(self::FILE, $jsonData);
                     return $jsonData;
                 };
             }
             $currentList[] = $data;
             $jsonData = json_encode($currentList);
-            file_put_contents($this->file, $jsonData);
+            file_put_contents(self::FILE, $jsonData);
             return $jsonData;
         }
-        file_put_contents($this->file, json_encode([$data]));
-        $userList = file_get_contents($this->file);
+        file_put_contents(self::FILE, json_encode([$data]));
+        $userList = file_get_contents(self::FILE);
         return $userList;
     }
 
@@ -71,7 +65,7 @@ class HandleUsersListsFiles{
      */
     public function getCurrentsList(): string
     {
-        $currentList = json_decode(file_get_contents($this->file), true);
+        $currentList = json_decode(file_get_contents(self::FILE), true);
         if(!empty($currentList))
         {
             return json_encode($currentList);
@@ -87,7 +81,7 @@ class HandleUsersListsFiles{
      */
     public function deleteUserToList(array $data): string
     {
-        $currentList = json_decode(file_get_contents($this->file), true);
+        $currentList = json_decode(file_get_contents(self::FILE), true);
 
         foreach($currentList as $key => $value)
         {
@@ -97,7 +91,7 @@ class HandleUsersListsFiles{
             }
         }
         $jsonData = json_encode(array_values($currentList));
-        file_put_contents($this->file, $jsonData);
+        file_put_contents(self::FILE, $jsonData);
         return $jsonData;
     }
 }

@@ -16,7 +16,7 @@ const Navbar = ({ history }) => {
     }
   
 return (
- <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+ <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
   <NavLink className="navbar-brand" to="/">ChatSym</NavLink>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -37,11 +37,11 @@ return (
       {(!isAuthenticated && (
         <>
         <li className="nav-item">
-        <NavLink to="/register" className="btn btn-danger mr-2">Nouveau +<i className="fas fa-user-plus"></i>
+        <NavLink to="/register" className="btn btn-info mr-2 btn-sm">Nouveau +<i className="fas fa-user-plus"></i>
         </NavLink>
         </li>
       <li className="nav-item mr-2">
-        <NavLink to="/login" className="btn btn-primary">Se Connecter<i className="fas fa-key ml-2"></i></NavLink>
+        <NavLink to="/login" className="btn btn-success btn-sm">Se Connecter<i className="fas fa-key ml-2"></i></NavLink>
         </li>
         </>
       )) || (

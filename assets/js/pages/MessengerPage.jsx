@@ -71,7 +71,7 @@ const MessengerPage = ({ id, channelName, msg, usersList }) => {
 
 return ( 
      <>
-     <div className="col-8 h-100 p-0">
+     <div className="col-8 h-100 p-0 section__chat">
           <div 
             className="show-message pt-3 h-75">
               {messages && (
@@ -81,7 +81,7 @@ return (
                 <p key={k}>
                 <img src={!msg.sender.avatarPath && UI_Avatar + msg.sender.firstname + "+" + msg.sender.lastname 
                 || 
-                Avatar_Path + msg.sender.avatarPath}className="rounded-circle avatar-channel" alt="avatar" />
+                Avatar_Path + msg.sender.avatarPath} className="rounded-circle avatar-channel" alt="avatar" />
                   <span 
                     className="username">
                     {msg.content &&  
@@ -97,14 +97,17 @@ return (
                 )}
             </div>
           <div className="form-group">
-           <form onSubmit={handleSubmit} >
+           <form onSubmit={handleSubmit} className="chat__form">
             <textarea name="content" 
               className="textarea" 
                 value={message.content} 
                   onChange={handleChange} 
                     type="text"
               />
-            <button type="submit" className="btn btn-primary ">Envoyer</button>
+            <div className="send__button">
+              <button type="submit" className="btn btn-success">Envoyer</button>
+            </div>
+            
             </form>
           </div>
       </div>

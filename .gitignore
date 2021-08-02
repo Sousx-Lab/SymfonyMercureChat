@@ -25,3 +25,7 @@ yarn-error.log
 ###> lexik/jwt-authentication-bundle ###
 /config/jwt/*.pem
 ###< lexik/jwt-authentication-bundle ###
+
+### users list  ###
+
+src/Services/UsersListsFiles/Data/usersList.json
