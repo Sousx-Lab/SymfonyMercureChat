@@ -2,7 +2,7 @@
 
 This app is a simple real-time text chat based on Symfony / Api Platform / Mercure Server and ReactJS…
 
-[![chat-sym.jpg](https://i.postimg.cc/25XPm9pm/chat-sym.jpg)](https://postimg.cc/McVsmDKr)
+[![chat-sym.jpg](https://i.postimg.cc/25yBjM5w/chat-sym.jpg)](https://postimg.cc/2qp52Hhb)
 ## Install dependencies:
 
 #### Php
